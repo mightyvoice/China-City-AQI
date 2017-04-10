@@ -15,6 +15,8 @@ import Queue
 
 CITY_LIST = [u'成都', u'重庆', u'北京', u'上海', u'深圳']
 
+MAX_SLEEP_TIME = 0
+
 headers = {'Host': 'www.aqistudy.cn',
            'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36'}
 
@@ -47,7 +49,7 @@ def get_city_list():
 
 
 def sleep_random_time():
-    time.sleep(random.randint(1, 5))
+    time.sleep(random.randint(0, MAX_SLEEP_TIME))
 
 
 def get_month_list(city):

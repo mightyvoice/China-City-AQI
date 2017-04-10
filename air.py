@@ -9,13 +9,15 @@ import time
 import random
 import threading
 import Queue
+import multiprocessing
+
 
 # reload(sys)
 # sys.setdefaultencoding('utf-8')
 
-CITY_LIST = [u'成都', u'重庆', u'北京', u'上海', u'深圳']
+CITY_LIST = [u'成都', u'重庆', u'北京', u'上海']
 
-MAX_SLEEP_TIME = 0
+MAX_SLEEP_TIME = 5
 
 headers = {'Host': 'www.aqistudy.cn',
            'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36'}
@@ -79,9 +81,9 @@ def get_AQI(city, month, url_city):
         return
 
 
-class Get_AQI_thread(threading.Thread):
+class Get_AQI_process(multiprocessing.Process):
     def __init__(self, city_list, thread_id):
-        threading.Thread.__init__(self)
+        multiprocessing.Process.__init__(self)
         self.thread_id = thread_id
         self.city_list = city_list
 
@@ -102,17 +104,17 @@ def main():
     try:
         # city_list = get_city_list()
         city_list = CITY_LIST 
-        thread_num = 10
-        all_threads = []
-        for i in range(thread_num):
-            city_list_thread = []
-            for j in range(i, len(city_list), thread_num):
-                city_list_thread.append(city_list[j])
-            cur_thread = Get_AQI_thread(city_list_thread, i)
-            cur_thread.start()
-            all_threads.append(cur_thread)
-        for thread in all_threads:
-            thread.join()
+        process_num = len(city_list)
+        all_process = []
+        for i in range(process_num):
+            city_list_process = []
+            for j in range(i, len(city_list), process_num):
+                city_list_process.append(city_list[j])
+            cur_process = Get_AQI_process(city_list_process, i)
+            cur_process.start()
+            all_process.append(cur_process)
+        for process in all_process:
+            process.join()
     except:
         pass
     finally:

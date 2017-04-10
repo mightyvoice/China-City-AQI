@@ -13,6 +13,8 @@ import Queue
 # reload(sys)
 # sys.setdefaultencoding('utf-8')
 
+CITY_LIST = [u'成都', u'重庆', u'北京', u'上海', u'深圳']
+
 headers = {'Host': 'www.aqistudy.cn',
            'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36'}
 
@@ -96,8 +98,8 @@ class Get_AQI_thread(threading.Thread):
 
 def main():
     try:
-        city_list = get_city_list()
-        # city_list = [u'成都', u'重庆', u'北京', u'上海', u'深圳']
+        # city_list = get_city_list()
+        city_list = CITY_LIST 
         thread_num = 10
         all_threads = []
         for i in range(thread_num):

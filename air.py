@@ -24,7 +24,7 @@ headers = {'Host': 'www.aqistudy.cn',
 
 base_url = 'https://www.aqistudy.cn/historydata/daydata.php?city='
 output_file = open("AQI.txt", "w")
-all_res = Queue.Queue()
+all_res = multiprocessing.Manager().Queue()
 
 def test():
     url = 'https://www.aqistudy.cn/historydata/daydata.php?city=宝鸡&month=2015-08'
